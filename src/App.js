@@ -23,7 +23,11 @@ const App =() => {
       date: new Date(2021, 5, 12),
     },
   ];
-  return <div> {<Expenses expenses={expenses} />} </div>
+  return (
+    <div> 
+      <Expenses expenses={expenses} /> 
+    </div>
+  );
 }
 
 export default App;
