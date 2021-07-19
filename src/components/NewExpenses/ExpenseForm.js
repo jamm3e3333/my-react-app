@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './ExpenseForm.css'
 
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
     // const [usetInput, setEnteredInput ] = useState({
     //     enteredTitle: '',
     //     enteredAmount: '',
@@ -46,6 +46,10 @@ const ExpenseForm = () => {
             amount: enteredAmount,
             date: new Date(enteredDate)
         }
+        props.onSaveExpenseData(expenseData);
+        setEnteredTitle('');
+        setEnteredAmount('');
+        setEnteredDate('');
         console.log(expenseData);
     }
     
@@ -54,15 +58,25 @@ const ExpenseForm = () => {
             <div className="new-expense__controls">
                 <div className="new-expense__control">
                     <label>Title</label>
-                    <input onChange={titleChangeHandler} type="text" />
+                    <input  onChange={titleChangeHandler} 
+                            value={enteredTitle} 
+                            type="text" />
                 </div>
                 <div className="new-expense__control">
                     <label>Amount</label>
-                    <input onChange={amountChangeHandler} type="number" min="0.01" step="0.01" />
+                    <input  onChange={amountChangeHandler} 
+                            value={enteredAmount} 
+                            type="number" 
+                            min="0.01" 
+                            step="0.01" />
                 </div>
                 <div className="new-expense__control">
                     <label>Date</label>
-                    <input onChange={dateChangeHandler} type="date" min="2019-01-01" max="2022-12-31" />
+                    <input  onChange={dateChangeHandler} 
+                            value={enteredDate} 
+                            type="date" 
+                            min="2019-01-01" 
+                            max="2022-12-31" />
                 </div>
             </div>
             <div className="new-expense__actions">

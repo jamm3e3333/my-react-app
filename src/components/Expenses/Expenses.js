@@ -1,4 +1,5 @@
 import ExpenseItem from './ExpenseItem';
+import ExpensesFilter from './ExpensesFilter';
 import Card from '../UI/Card';
 import './Expenses.css'
 
@@ -6,6 +7,11 @@ const Expenses = (props) => {
 
     return (
         <Card className="expenses">
+            <div>
+                <ExpensesFilter 
+                
+                />
+            </div>
             {props.expenses.map((exp) => {
                 return (
                     <ExpenseItem 
