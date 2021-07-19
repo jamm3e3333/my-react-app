@@ -24,7 +24,7 @@ const App =() => {
       amount: 450,
       date: new Date(2021, 5, 12),
     },
-  ])
+  ]);
 
   const addExpenseHandler = (newExpenses) => {
     updateExpenses((prevState) => {
@@ -34,7 +34,8 @@ const App =() => {
   return (
     <div> 
       <NewExpense onAddExpense={addExpenseHandler} />
-      <Expenses expenses={expenses} /> 
+      <Expenses expenses={expenses}    
+      /> 
     </div>
   );
 }

@@ -8,7 +8,6 @@ const Expenses = (props) => {
     const [year, setSelectedYear] = useState('2020');
     const filterSelectedYear = (selectedYear) => {
         setSelectedYear(selectedYear);
-        console.log(selectedYear);
     }
     return (
         <Card className="expenses">
@@ -18,7 +17,10 @@ const Expenses = (props) => {
                     onFilterYear={filterSelectedYear}
                 />
             </div>
-            {props.expenses.map((exp) => {
+            {props.expenses.filter((expFil) => {
+                return expFil.date.toLocaleString('en-US',{year: 'numeric'}) === year;
+            })
+            .map((exp) => {
                 return (
                     <ExpenseItem 
                         key={exp.id}
