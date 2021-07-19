@@ -21,7 +21,8 @@ const Expenses = (props) => {
                     onFilterYear={filterSelectedYear}
                 />
             </div>
-            {filteredExpenses.map((exp) => {
+            {!filteredExpenses.length && <p>No expenses found.</p>}
+            {filteredExpenses.length > 0 && filteredExpenses.map((exp) => {
                 return (
                     <ExpenseItem 
                         key={exp.id}
