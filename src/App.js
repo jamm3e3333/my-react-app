@@ -1,10 +1,10 @@
 import Expenses from './components/Expenses/Expenses';
 import NewExpense from './components/NewExpenses/NewExpense';
-// import React, { useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 const App =() => {
-  const expenses = [
+  const [expenses, updateExpenses] = useState([
     {
       id: 'e1',
       title: 'Toilet Paper',
@@ -24,10 +24,10 @@ const App =() => {
       amount: 450,
       date: new Date(2021, 5, 12),
     },
-  ];
+  ])
 
-  const addExpenseHandler = (expenses) => {
-    console.log(expenses);
+  const addExpenseHandler = (newExpenses) => {
+    updateExpenses(expenses.concat(newExpenses));
   }
   return (
     <div> 
