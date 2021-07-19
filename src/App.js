@@ -27,7 +27,9 @@ const App =() => {
   ])
 
   const addExpenseHandler = (newExpenses) => {
-    updateExpenses(expenses.concat(newExpenses));
+    updateExpenses((prevState) => {
+      return [newExpenses, ...prevState];
+    });
   }
   return (
     <div> 
