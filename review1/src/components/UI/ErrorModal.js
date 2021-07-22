@@ -4,6 +4,9 @@ import Button from './Button';
 import classes from './ErrorModal.module.css';
 
 const ErrorModal = (props) => {
+    const clearError = () => {
+        props.onClearError();
+    }
     return (
         <div>
             <div className={classes.backdrop} />
@@ -15,7 +18,7 @@ const ErrorModal = (props) => {
                     <p>{props.message}</p>
                 </div>
                 <footer className={classes.actions}>
-                    <Button>OK</Button>
+                    <Button onClick={clearError}>OK</Button>
                 </footer>
             </Card>
         </div>
