@@ -7,15 +7,30 @@ import './App.css';
 
 
 function App() {
-  const [user, setUser ] = useState({});
+  const [user, setUser ] = useState([]);
+  
+  const onAddUser = (user) => {
+    setUser((prevState) => {
+      return [...prevState, user];
+    })
+  }
+
+  const onDeleteUser = (id) => {
+    setUser((prevState) => {
+      return prevState.filter( us => us.id !== id);
+    })
+  }
+
   return (
     <div className="App">
       <UserForm
-
+        addUser={onAddUser}  
       />
-      <UserView>
-        
-      </UserView>
+
+      <UserView 
+        deleteUser={onDeleteUser}
+        item={user}
+      />
     </div>
   );
 }
