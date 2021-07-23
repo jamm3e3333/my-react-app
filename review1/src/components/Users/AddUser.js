@@ -47,7 +47,11 @@ const AddUser = (props) => {
 
     return (
         <Fragment>
-            {error && <ErrorModal onClearError={resetError} title={error.title} message={error.message} />}
+            {error && <ErrorModal 
+                        onConfirm={resetError} 
+                        title={error.title} 
+                        message={error.message} 
+                      />}
             <Card className={classes.input}>
                 <form onSubmit={addUserHandler}>
                     <label htmlFor="username">Username</label>
