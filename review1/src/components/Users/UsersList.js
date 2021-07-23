@@ -5,9 +5,10 @@ import UserItem from './UserItem';
 const UsersList = (props) => {
     
     return (
-        <Card className={classes.users}>
+        <div>
+        {props.users.length > 0 && <Card className={classes.users}>
             <ul>
-                {props.users && props.users.map((user) => {
+                {props.users.map((user) => {
                     return (
                         <UserItem deleteUser={props.onDeleteUser} 
                             key={user.id} id={user.id}>
@@ -16,7 +17,8 @@ const UsersList = (props) => {
                         ) 
                 })}
             </ul>
-        </Card>
+        </Card>}
+        </div>
     )
 }
 

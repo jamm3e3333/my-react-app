@@ -26,10 +26,10 @@ const App = (props) => {
   }
 
   return (
-    <div className="App">
+    <React.Fragment>
       <AddUser onAddUser={addUser}/>      
       <UsersList onDeleteUser={deleteUser} users={users} />
-    </div>
+    </React.Fragment>
   )
 }
 
