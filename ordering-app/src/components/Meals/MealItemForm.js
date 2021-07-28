@@ -14,13 +14,13 @@ const MealItemForm = (props) => {
         if(!enteredAmount.trim().length || enteredAmountNumber < 1 ||  enteredAmountNumber > 5) {
             return setAmountIsValid(false);
         }
-        return setAmountIsValid(true);
+        props.onAddtoCart(enteredAmountNumber);
     }
 
     return (
         <form onSubmit={submitHandler} className={classes.form}>
             <Input label="Amount" ref={amountInputRef} input={{
-                id: 'amout' + props.id,
+                id: 'amount' + props.id,
                 type: 'number',
                 min: '1',
                 max: '5',
