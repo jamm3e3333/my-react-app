@@ -7,8 +7,8 @@ const AddMovie = props => {
   const openingTextRef = useRef('');
   const releaseDateRef = useRef('');
 
-  function submitHandler(event) {
-    event.preventDefault();
+  const submitHandler = e => {
+    e.preventDefault();
 
     // could add validation here...
 
