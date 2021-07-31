@@ -1,32 +1,53 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
 
-function App() {
-  const dummyMovies = [
-    {
-      id: 1,
-      title: 'Some Dummy Movie',
-      openingText: 'This is the opening text of the movie',
-      releaseDate: '2021-05-18',
-    },
-    {
-      id: 2,
-      title: 'Some Dummy Movie 2',
-      openingText: 'This is the second opening text of the movie',
-      releaseDate: '2021-05-19',
-    },
-  ];
+const App = () => {
+
+  const [moviesState, setMoviesState] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(undefined);
+
+  const getMovies = useCallback( async () => {
+    try{
+      setIsError(undefined);
+      setIsLoading(true);
+      setMoviesState([]);
+      const response = await fetch('https://swapi.dev/api/films');
+      if(response.status !== 200) {
+        throw new Error();
+      }
+      const data = await response.json();
+      setMoviesState(data.results);
+      setIsLoading(false);
+    }
+    catch(e){
+      setIsLoading(false);
+      setMoviesState([]);
+      setIsError(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    getMovies();
+  }, [getMovies]);
 
   return (
     <React.Fragment>
       <section>
-        <button>Fetch Movies</button>
+        <button onClick={getMovies}>Fetch Movies</button>
       </section>
+      {isError && 
+        <section>
+          <p>Error while catching the data.</p>
+        </section>
+      }
+      {(isLoading ||  moviesState.length > 0) &&
       <section>
-        <MoviesList movies={dummyMovies} />
-      </section>
+        {isLoading && <p>Loading... </p>}
+          {!isLoading && <MoviesList movies={moviesState} />}
+      </section>}
     </React.Fragment>
   );
 }
