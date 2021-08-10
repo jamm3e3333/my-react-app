@@ -12,9 +12,12 @@ function App() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch(
-        'https://react-http-6b4a6.firebaseio.com/tasks.json'
-      );
+      const response = await fetch('https://react-http-e2204-default-rtdb.firebaseio.com/tasks.json', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'applicaiton/json'
+          }
+        });
 
       if (!response.ok) {
         throw new Error('Request failed!');
