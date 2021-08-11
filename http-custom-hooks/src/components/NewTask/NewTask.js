@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import useHttop from '../../hooks/use-http';
+import useHttp from '../../hooks/use-http';
 import Section from '../UI/Section';
 import TaskForm from './TaskForm';
 
@@ -7,7 +6,7 @@ const NewTask = (props) => {
 
   const { isLoading, error, sendRequest: sendTaskRequest } = useHttp();
 
-  const createTask = taskData => {
+  const createTask = (taskText, taskData) => {
     const generatedId = taskData.name; // firebase-specific => "name" contains generated id
     const createdTask = { id: generatedId, text: taskText };
 
@@ -25,8 +24,7 @@ const NewTask = (props) => {
         'Content-Type': 'application/json'
       },
       body: { text: taskText }
-    }, createTask);
-
+    }, createTask.bind(null, taskText));
   };
 
   return (
