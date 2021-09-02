@@ -1,36 +1,65 @@
+import { useEffect, useState } from 'react';
+
 import classes from './AvailableMeals.module.css';
 import MealsItem from './MealsItem';
 import Card from '../UI/Card';
 
-const DUMMY_MEALS = [
-    {
-      id: 'm1',
-      name: 'Sushi',
-      description: 'Finest fish and veggies',
-      price: 22.99,
-    },
-    {
-      id: 'm2',
-      name: 'Schnitzel',
-      description: 'A german specialty!',
-      price: 16.5,
-    },
-    {
-      id: 'm3',
-      name: 'Barbecue Burger',
-      description: 'American, raw, meaty',
-      price: 12.99,
-    },
-    {
-      id: 'm4',
-      name: 'Green Bowl',
-      description: 'Healthy...and green...',
-      price: 18.99,
-    },
-  ];
-
 const AvailableMeals = () => {
-    const mealsList = DUMMY_MEALS.map(meal => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const [meals, setMeals] = useState([]);
+
+
+  useEffect(() => {
+    const fetchMeal = async() => {
+      try{
+        setIsError(false);
+        setIsLoading(true);
+        const response = await fetch('https://next-js-734e8-default-rtdb.firebaseio.com/meals.json');
+        if(response.status !== 200) {
+          throw new Error();
+        }
+        const data = await response.json();
+        if(!data) {
+          throw new Error();
+        }
+        const loadedData = [];
+        for(const key in data) {
+          loadedData.push({
+            id: key,
+            name: data[key].name,
+            description: data[key].description,
+            price: data[key].price
+          })
+        }
+        console.log(loadedData);
+        setMeals(loadedData);
+        setIsLoading(false);
+      }
+      catch(e) {
+        console.log(e);
+        setIsError(true);
+      }
+    }
+    fetchMeal();
+  }, [])
+
+  if(isError) {
+    return (
+      <section>
+        <p className={classes['meals__error']}>Loading...</p>
+      </section>
+    )
+  }
+
+  if(isLoading) {
+    return (
+      <section>
+        <p className={classes['meals__loading']}>Error while fetching the data.</p>
+      </section>
+    )
+  }
+    const mealsList = meals.map(meal => {
         return (
           <MealsItem 
               id={meal.id}
@@ -41,6 +70,7 @@ const AvailableMeals = () => {
           />
         )
     });
+
     return (
         <section className={classes.meals}>
             <Card>
