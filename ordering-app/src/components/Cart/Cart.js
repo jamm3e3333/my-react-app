@@ -12,19 +12,40 @@ import classes from './Cart.module.css';
 const Cart = (props) => {
     const cartCtx = useContext(CartContext);
     const [isCheckout, setIsCheckout] = useState(false);
-
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isError, setIsError] = useState(false);
+    const [didSubmit, setDidSubmit] = useState(false);
     const orderHandler = () => {
         setIsCheckout(true);
     }
 
-    const submitOrderHandler = (userData) => {
-        fetch('https://next-js-734e8-default-rtdb.firebaseio.com/meals_users.json', {
-            method: 'POST',
-            body: JSON.stringify({
-                user: userData,
-                orderedItems: cartCtx.items
+    const submitOrderHandler = async (userData) => {
+        try {
+            setIsSubmitting(true);
+            setIsError(false);
+
+            const response = await fetch('https://next-js-734e8-default-rtdb.firebaseio.com/meals_users.json', {
+                method: 'POST',
+                body: JSON.stringify({
+                    user: userData,
+                    orderedItems: cartCtx.items
+                })
             })
-        })
+            if(!response.ok) {
+                throw new Error();
+            }
+            
+            const data = await response.json();
+            if(!data) {
+                throw new Error();
+            }
+            setIsSubmitting(false);
+            setDidSubmit(true);
+            cartCtx.clearCart();
+        }
+        catch(e) {
+            setIsError(true);
+        }
     };
 
     const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
@@ -48,16 +69,17 @@ const Cart = (props) => {
                                     />
                                 ))}     
                     </ul>);
-    return (
-        <Modal onClose={props.onClose}>
+
+    const cartModalContent = (
+        <>
             {cartItems}
             <div className={classes.total}>
                 <span>totalAmount</span>
                 <span>{totalAmount}</span>
             </div>
-            {isCheckout && <Checkout onConfirm={submitOrderHandler} onCancel={props.onClose} />}
+            {(isCheckout && !isError)&& <Checkout onConfirm={submitOrderHandler} onCancel={props.onClose} />}
 
-            {!isCheckout &&
+            {(!isCheckout && !isError) &&
             <div className={classes.actions}>
                 <button onClick={props.onClose} className={classes['button--alt']}>
                     Close
@@ -68,6 +90,26 @@ const Cart = (props) => {
                     </button>
                 }
             </div>}
+        </>
+    )
+
+    const isSubmittingContent =  <p>Sending order data...</p>
+    const didSubmitContent = (
+        <>
+            <p>Succesfully sent the order!</p>
+            <div className={classes.actions}>
+                <button className={classes.button} onClick={props.onClose}>
+                    Close
+                </button>
+            </div>
+        </>
+    ) 
+    return (
+        <Modal onClose={props.onClose}>
+            {(!isSubmitting && !didSubmit && !isError) && cartModalContent}
+            {(isSubmitting && !didSubmit && !isError) && isSubmittingContent}
+            {(didSubmit && !isSubmitting && !isError) && didSubmitContent}
+            {isError && <p className={classes['cart__error']}>Error while ordering the food!</p>}
         </Modal>
     )
 }
