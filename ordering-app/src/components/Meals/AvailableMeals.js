@@ -46,7 +46,7 @@ const AvailableMeals = () => {
   if(isError) {
     return (
       <section>
-        <p className={classes['meals__error']}>Loading...</p>
+        <p className={classes['meals__error']}>Error while fetching the data.</p>
       </section>
     )
   }
@@ -54,7 +54,7 @@ const AvailableMeals = () => {
   if(isLoading) {
     return (
       <section>
-        <p className={classes['meals__loading']}>Error while fetching the data.</p>
+        <p className={classes['meals__loading']}>Loading...</p>
       </section>
     )
   }

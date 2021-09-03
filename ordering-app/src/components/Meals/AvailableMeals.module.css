@@ -10,6 +10,16 @@
     margin: 0;
     padding: 0;
   }
+
+  .meals__loading {
+    text-align: center;
+    color: rgba(255,255,255,1);
+  }
+
+  .meals__error {
+    text-align: cetner;
+    color: rgba(255, 74, 74, 1);  
+  }
   
   @keyframes meals-appear {
     from {
