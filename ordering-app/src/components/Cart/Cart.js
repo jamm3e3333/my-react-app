@@ -12,9 +12,20 @@ import classes from './Cart.module.css';
 const Cart = (props) => {
     const cartCtx = useContext(CartContext);
     const [isCheckout, setIsCheckout] = useState(false);
+
     const orderHandler = () => {
         setIsCheckout(true);
     }
+
+    const submitOrderHandler = (userData) => {
+        fetch('https://next-js-734e8-default-rtdb.firebaseio.com/meals_users.json', {
+            method: 'POST',
+            body: JSON.stringify({
+                user: userData,
+                orderedItems: cartCtx.items
+            })
+        })
+    };
 
     const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
     const cartItemRemoveHandler = id => {
@@ -44,7 +55,7 @@ const Cart = (props) => {
                 <span>totalAmount</span>
                 <span>{totalAmount}</span>
             </div>
-            {isCheckout && <Checkout onCancel={props.onClose} />}
+            {isCheckout && <Checkout onConfirm={submitOrderHandler} onCancel={props.onClose} />}
 
             {!isCheckout &&
             <div className={classes.actions}>
