@@ -1,6 +1,6 @@
-import redux from 'redux';
+import { createStore } from 'redux';
 
-function counterReducer(state = { counter: 0}, action) {
+const counterReducer = (state = { counter: 0}, action) => {
     if(action.type === 'INCR') {
         return {
             counter: state.counter + 1,
@@ -11,13 +11,10 @@ function counterReducer(state = { counter: 0}, action) {
             counter: state.counter - 1,
         }
     }
+
+    return state;
 }
 
-const store = redux.createStore(counterReducer);
-
-function counterSubscriber() {
-    const latestState = store.getState();
-    console.log(latestState);
-}
+const store = createStore(counterReducer);
 
 export default store;
