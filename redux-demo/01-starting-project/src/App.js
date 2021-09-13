@@ -5,7 +5,7 @@ import Auth from './components/Auth';
 import UserProfile from './components/UserProfile';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { authActions } from './store/index';
+import { authActions } from './store/auth-slice';
 
 function App() {
   const [email, setEmail] = useState('');
