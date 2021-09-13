@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { useSelector, useDispatch} from 'react-redux';
+import { counterActions } from '../store/index';
 import classes from './Counter.module.css';
 
 const Counter = () => {
@@ -10,19 +11,22 @@ const Counter = () => {
   const inputAmountRef = useRef();
 
   const incHandler = () => {
-    dispatch({type: 'INCR'})
+    dispatch(counterActions.increment());
   }
 
   const decHandler = () => {
-    dispatch({type: 'DECR'});
+    dispatch(counterActions.decrement());
   }
 
   const increaseHandler = () => {
-    dispatch({type: 'INCREASE', amount: Number.parseInt(inputAmountRef.current.value)})
+    if(inputAmountRef.current.value === '' || isNaN(parseInt(inputAmountRef.current.value))) {
+      return;
+    }
+    dispatch(counterActions.increase(Number.parseInt(inputAmountRef.current.value)) )
   }
 
   const toggleCounterHandler = () => {
-    dispatch({type: 'VISIBILITY'});
+    dispatch(counterActions.toggle());
   };
 
   return (
