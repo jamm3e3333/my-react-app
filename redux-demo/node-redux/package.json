@@ -1,0 +1,14 @@
+{
+  "name": "redux-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "nodemon": "^2.0.12",
+    "redux": "^4.1.1"
+  },
+  "scripts": {
+    "dev": "nodemon redux-demo.js",
+    "start": "node redux-demo.js"
+  }
+}
