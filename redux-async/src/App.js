@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { uiActions } from './store/ui-slice';
 
+let isInitial = true;
+
 function App() {
   const showCart = useSelector(state => state.ui.cartIsVisible);
   const cart = useSelector(state => state.cart);
@@ -47,6 +49,11 @@ function App() {
           message: 'Data was not sent!',
         }));
       }
+    }
+
+    if(isInitial) {
+      isInitial = false;
+      return;
     }
     sendCartData();
   }, [cart, dispatch]);
