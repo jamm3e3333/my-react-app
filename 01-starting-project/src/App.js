@@ -22,6 +22,9 @@ function App() {
           <Route path='/products/:productId'>
             <ProductDetail />
           </Route>
+          <Route path='*' exact>
+            <h1>Error 404</h1>
+          </Route>
         </Switch>
       </main>
     </div>
